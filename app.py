@@ -104,8 +104,8 @@ st.markdown(
     """
 **Welches Verfahren für welche Aufgabe, und gemessen woran?** Dieselbe Aufgabe wie in Stück 1 bis 12: `n` Bauteile auf `n` Plätze, Kosten gleich der Summe aus **Fluss mal Abstand**, beim Finden dazu **feste Pads**.
 Stück 3 bis 12 haben zehn Verfahren angesammelt: Schranken, einen Baum, Rundung, die Schleife, die Dichtestrafe, den Tauschabstieg und das Annealing. Hier steht **die Wahl** und, wie in den anderen Abschlussstücken, **was die Wahl kostet**.
-Es gibt **zwei Aufgaben**: das **Finden** einer guten Anordnung und das **Beweisen**, dass keine bessere existiert. Die Antwort der Messung: Finden ist billig, Beweisen kostet; bis `n = 16` schlagen **20 Neustarts** des Abstiegs jede Relaxation,
-ab `n ≈ 20` sind **Schleife plus Annealing** schneller; die Relaxationen zahlen als **Schranke** und als **Startlösung**. Sechs Familien der Flussmatrix und die **Pads** sind **eigene Erfindungen**. Stück 15 der Reihe, der Abschluss.
+Es gibt **zwei Aufgaben**: das **Finden** einer guten Anordnung und das **Beweisen**, dass keine bessere existiert. Die Antwort der Messung: Finden ist billig, Beweisen kostet; bis `n = 12` schlagen **20 Neustarts** des Abstiegs jede Relaxation deutlich, bei `n = 16` liegen sie im Mittel vor Schleife plus Annealing (im Rahmen der Streuung),
+ab `n = 25` (bei `n = 20` noch nicht) sind **Schleife plus Annealing** schneller; die Relaxationen zahlen als **Schranke** und als **Startlösung**. Sechs Familien der Flussmatrix und die **Pads** sind **eigene Erfindungen**. Stück 15 der Reihe, der Abschluss.
 
 Weiter unten: **fünf Experimente** (**🔬**), **🚧 Wo die Annahmen enden** und der Expander **📐 Mathematische Formulierung**.
 """
@@ -289,7 +289,7 @@ st.markdown("---")
 # --- Experiment 4 ---------------------------------------------------------------------------------------------------------------------------
 
 st.subheader("🔬 Experiment 4: Die Kreuzung")
-st.caption("20 Neustarts gegen Schleife mit Annealing über die Größe: das mittlere Bedauern und der Median der Zeit, mit dem gepaarten Unterschied und seinem Standardfehler. Bis n = 16 ist 20 Neustarts schneller und mindestens so gut; ab n = 20 kippt es in der Zeit.")
+st.caption("20 Neustarts gegen Schleife mit Annealing über die Größe: das mittlere Bedauern und der Median der Zeit, mit dem gepaarten Unterschied und seinem Standardfehler. Bis n = 16 ist 20 Neustarts schneller und im Mittel mindestens so gut; die Zeit kippt zwischen n = 20 und n = 25.")
 if len(avail) >= 2:
     st.plotly_chart(build_cross(fixed, regret_stats), width="stretch", key="cross")
     tab = []
@@ -309,7 +309,7 @@ st.markdown("---")
 st.subheader("🔬 Experiment 5: Die Regel auf frischen Instanzen")
 st.caption("Die Regel („Neustarts bis n = 16, danach Schleife mit Annealing“) wurde an den festen Instanzen gebildet. Hier steht sie auf frischen Instanzen (Seeds ab 200000) neben „immer Neustarts“, „immer Schleife mit Annealing“ und dem besseren der beiden je Instanz. Dazu die Grenzen der Messung.")
 if len(avail) == len(C.FIND_SIZES):
-    if run_knob("fresh_ok", "⏱️ Frische Instanzen rechnen", "Die Rechnung läuft über 342 frische Instanzen (90 / 54 / 36 / 18 / 18 / 18) und dauert einige Minuten (auf Streamlit Cloud länger). Mit dem Knopf starten:",
+    if run_knob("fresh_ok", "⏱️ Frische Instanzen rechnen", "Die Rechnung läuft über 234 frische Instanzen (90 / 54 / 36 / 18 / 18 / 18) und dauert einige Minuten (auf Streamlit Cloud länger). Mit dem Knopf starten:",
                 [(f"n = {m}, {C.FAMILY_NAMES[f]}", (f, m, True)) for m in C.FIND_SIZES for f in C.FAMILIES], lambda f, m, fr: _find_sweep(f, m, fr)):
         fresh = fixed_rows(C.FIND_SIZES, True)
         st.plotly_chart(build_rule_bars(fresh, rule_regret, "Mittleres Bedauern der Regel auf frischen Instanzen"), width="stretch", key="rule_bars")
@@ -326,9 +326,9 @@ st.markdown(
     """
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
-| **Zeit ist implementierungsabhängig** | Die Verfahren sind vektorisierte Python-Fassungen (numpy); in anderer Sprache oder mit anderer Umsetzung liegen die Zeiten und die Kreuzung bei `n ≈ 20` woanders. Zeiten schwanken von Lauf zu Lauf um das Doppelte; in Tests stehen nur Kosten und Zählungen. | Stück 12, 11 |
-| **Kleine Stichprobe ab n = 20** | 18 Instanzen je Größe, nur 4 Pads: der gepaarte Unterschied hat 0,3 bis 0,5 Prozentpunkte Unsicherheit. „Schneller“ ist stark, „im Mittel etwas besser“ schwach. | – |
-| **Zugzahl des Annealing ab n = 20 selbst gesetzt** | Stück 12 definiert die Zugzahlen nur bis `n = 16`; für 20, 25, 36 stehen hier 9 000 / 12 000 / 20 000. Die Empfindlichkeit (halbe und doppelte Zugzahl) wurde in der Phase 0 gemessen, die Reihenfolge gegen die Neustarts blieb. | Stück 12 |
+| **Zeit ist implementierungsabhängig** | Die Verfahren sind vektorisierte Python-Fassungen (numpy); in anderer Sprache oder mit anderer Umsetzung liegen die Zeiten und die Kreuzung zwischen `n = 20` und `n = 25` woanders. Zeiten schwanken von Lauf zu Lauf um das Doppelte; in Tests stehen nur Kosten und Zählungen. | Stück 12, 11 |
+| **Kleine Stichprobe ab n = 20** | 18 Instanzen je Größe, nur 4 Pads: der gepaarte Unterschied hat 0,3 bis 0,6 Prozentpunkte Unsicherheit. „Schneller“ ist stark, „im Mittel etwas besser“ schwach. | – |
+| **Zugzahl des Annealing ab n = 20 selbst gesetzt** | Stück 12 definiert die Zugzahlen nur bis `n = 16`; für 20, 25, 36 stehen hier 9 000 / 12 000 / 20 000. Die Empfindlichkeit (halbe und doppelte Zugzahl) wurde in der Phase 0 gemessen, die Reihenfolge gegen die Neustarts blieb bei n = 25 und 36, bei n = 20 hängt sie von der Zugzahl ab. | Stück 12 |
 | **Der Vergleichswert ist selbst ein Verfahrensergebnis** | Ab `n = 12` ist es das beste Ergebnis aller elf Verfahren; Bedauern ist eine obere Grenze der Lücke zum Optimum, „0 %“ heißt „so gut wie das Beste dieser elf“, nicht „optimal“. | Stück 8 |
 | **Dichtestrafe mit den Einstellungen aus Stück 11** | Randzone 0,5, Ladungsbreite 3, zwölf Stufen: bei anderen Parametern (breitere Randzone, mehr Stufen) kann sie besser abschneiden. Der Befund „auf keiner Kante“ gilt für diese Einstellungen. | Stück 11 |
 | **Pads und Familien erfunden** | Zahl, Ort, Gewicht und Verbindungen der Pads und die sechs Familien sind eigene Erfindungen; jede Aussage nennt die Pad-Zahl. Echte Platinen haben andere Strukturen. | Stück 9 |

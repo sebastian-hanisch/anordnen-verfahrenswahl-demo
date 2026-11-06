@@ -63,7 +63,7 @@ def test_prove_verdict_proved_capped_and_out_of_reach(prove8):
 
 def test_path_verdict_lists_the_questions():
     kind, text = E.verdict_path(E.Settings("cluster", 25, 1, 4, "find", "tight"), None)
-    assert kind == "info" and "Ist n mindestens 20? ja" in text and "knapp" in text and "Abstieg aus der Schleife" in text and "nicht von Familie oder Pad-Zahl" in text
+    assert kind == "info" and "Ist n mindestens 20? ja" in text and "knapp" in text and "Abstieg aus der Schleife" in text and "nicht Familie oder Pad-Zahl" in text
     _, tp = E.verdict_path(E.Settings("cluster", 8, 1, 4, "prove", "normal"), None)
     assert "Muss das Optimum bewiesen werden? ja" in tp and "Branch and Bound" in tp
 

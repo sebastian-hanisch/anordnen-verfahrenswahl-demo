@@ -369,7 +369,7 @@ def verdict_path(s: Settings, v: dict):
     """Der Entscheidungsweg in Worten (die Fragen stehen in der App als Liste)."""
     adv = R.advise(s.n, s.task, s.budget)
     steps = " → ".join(f"{st.question} {st.answer}" for st in adv.steps)
-    return "info", f"Entscheidungsweg für n = {s.n}, Aufgabe {C.TASK_NAMES[s.task].split(':')[0].lower()}, Zeitbudget {C.BUDGET_NAMES[s.budget]}: {steps}. Die Regel hängt nur von Größe, Aufgabe und Zeitbudget ab, nicht von Familie oder Pad-Zahl: so wurde sie gemessen."
+    return "info", f"Entscheidungsweg für n = {s.n}, Aufgabe {C.TASK_NAMES[s.task].split(':')[0].lower()}, Zeitbudget {C.BUDGET_NAMES[s.budget]}: {steps}. Die Regel liest nur Größe, Aufgabe und Zeitbudget, nicht Familie oder Pad-Zahl; ob der Wechsel auch von der Familie abhängt, ist mit den wenigen Instanzen ab n = 20 nicht entschieden."
 
 
 def verdict_find_sweep(n: int, rows: list):

@@ -4,7 +4,7 @@ Die Regel fasst die Messungen der Phase 0 und dieser Demo zusammen (Messung an d
   * Beweisen verlangt: bis n = 12 Branch and Bound mit der Gilmore–Lawler-Schranke (Stück 8); darüber ist der Baum in dieser Fassung zu groß, es bleiben die Schranken als Güteaussage und das Finden.
   * Finden bis n = 16: Neustarts des Abstiegs aus Zufall (20; bei knappem Zeitbudget 6).
   * Finden ab n = 20: die Schleife aus Stück 10 als Startlösung, danach kaltes Annealing (bei knappem Zeitbudget nur der Abstieg aus der Schleife).
-Die Grenze zwischen 16 und 20 ist die der gemessenen Größen; die Kreuzung liegt bei n ≈ 20 (die Messreihen zeigen dort verschiedene Sieger)."""
+Die Grenze zwischen 16 und 20 ist die der gemessenen Größen; die Kreuzung der Zeit liegt zwischen n = 20 und n = 25 (bei n = 20 zeigen die Messreihen verschiedene Sieger)."""
 
 from __future__ import annotations
 
